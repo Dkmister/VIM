@@ -7,11 +7,22 @@ while(True):
     # Capture frame-by-frame
     ret, frame = cap.read()
 
+    rows = frame.shape[0]
+
+    cols = frame.shape[1]
+
+    M = cv2.getRotationMatrix2D((cols/2,rows/2),90,1)
+
+    rotated = cv2.warpAffine(frame,M,(cols,rows))
+
     negative = 255 - frame
 
     mirror_x = cv2.flip(frame,1)
 
     mirror_y = cv2.flip(frame,0)
+
+    blur = cv2.GaussianBlur(frame,(15,15),0)
+
     # Our operations on the frame come here
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
@@ -31,6 +42,8 @@ while(True):
     cv2.imshow('negative',negative)
     cv2.imshow('flip x',mirror_x)
     cv2.imshow('flip y',mirror_y)
+    cv2.imshow('blur',blur)
+    cv2.imshow('rotated',rotated)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
