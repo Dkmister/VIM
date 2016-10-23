@@ -43,7 +43,7 @@ fourcc = cv2.cv.CV_FOURCC('m', 'p', '4', 'v')
 out = cv2.VideoWriter('result.avi', fourcc, 20.0, (frame.shape[1],frame.shape[0]))
 
 while rval:
-if vc.isOpened():
+    if vc.isOpened():
         rval, frame = vc.read()
     else:
         rval = False 
