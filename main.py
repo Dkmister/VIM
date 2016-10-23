@@ -107,10 +107,10 @@ while rval:
 	else:
 	    yFlipActive = True
 	
-   cv2.imshow('Original Video', frame)
+    cv2.imshow('Original Video', frame)
 
 	
-   resultFrame = copy.deepcopy(frame)
+    resultFrame = copy.deepcopy(frame)
 
     if gaussianBlurActive:
         kSize = cv2.getTrackbarPos(flipGaussianBlurLevel,'Original Video')
