@@ -2,7 +2,7 @@ import numpy as np
 import copy
 import cv2
 
-def nothing(y):
+def nothing(x):
     pass
 
 cv2.namedWindow("Original Window", cv2.WINDOW_NORMAL)
@@ -22,7 +22,7 @@ cv2.createTrackbar(flipGaussianBlurLevel, 'Original Window',0,255,nothing)
 gaussianBlurActive = False
 cannyActive = False
 sobelActive = False 
-brightnessActive = False
+brightnessActive = True 
 constrastActive = False
 negativeActive = False
 grayscaleActive = False
@@ -36,11 +36,12 @@ vc = cv2.VideoCapture(0)
 if vc.isOpened():
     rval, frame = vc.read()
     resultFrame = copy.deepcopy(frame)
+    fourcc = cv2.cv.CV_FOURCC('m', 'p', '4', 'v')
+    out = cv2.VideoWriter('result.avi', fourcc, 20.0, (frame.shape[1],frame.shape[0]))
 else:
     rval = False
 
-fourcc = cv2.cv.CV_FOURCC('m', 'p', '4', 'v')
-out = cv2.VideoWriter('result.avi', fourcc, 20.0, (frame.shape[1],frame.shape[0]))
+
 
 while rval:
     if vc.isOpened():
@@ -48,14 +49,15 @@ while rval:
     else:
         rval = False 
 
-    key = cv2.waitKey(1)
+    key = cv2.waitKey(1)    
+
     if key == 27:
         break
     if key == ord('q'):
-		if gaussianBlurActive == True:
-			gaussianBlurActive = False
-		else:
-			gaussianBlurActive = True
+	if gaussianBlurActive == True:
+	    gaussianBlurActive = False
+	else:
+	    gaussianBlurActive = True
     if key == ord('w'):
         if cannyActive == True:
 	    cannyActive = False
@@ -124,8 +126,8 @@ while rval:
     if brightnessActive:
 	amount = cv2.getTrackbarPos(flipBrightnessLevel,'Original Video')
 	resultFrame = cv2.add(frame, np.full((frame.shape[0],frame.shape[1],3), amount, np.uint8))
-    if contrastActive:
-	amount = cv2.getTrackbarPos(flipContrastLevel,'Original Video')
+    if constrastActive:
+	amount = cv2.getTrackbarPos(flipConstrastLevel,'Original Video')
 	resultFrame = cv2.multiply(frame, np.full((frame.shape[0],frame.shape[1],3), amount, np.uint8))
     if negativeActive:
         negative = 255 - frame
