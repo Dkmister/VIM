@@ -22,9 +22,9 @@ cv2.createTrackbar(flipGaussianBlurLevel, 'Original Window',0,255,nothing)
 gaussianBlurActive = False
 cannyActive = False
 sobelActive = False 
-brightnessActive = True 
+brightnessActive = False 
 constrastActive = False
-negativeActive = False
+negativeActive = True
 grayscaleActive = False
 resizeActive = False
 rotateActive = False
@@ -37,7 +37,7 @@ if vc.isOpened():
     rval, frame = vc.read()
     resultFrame = copy.deepcopy(frame)
     fourcc = cv2.cv.CV_FOURCC('m', 'p', '4', 'v')
-    out = cv2.VideoWriter('result.avi', fourcc, 20.0, (frame.shape[1],frame.shape[0]))
+    out = cv2.VideoWriter('result_1.avi', fourcc, 5.0, (frame.shape[1],frame.shape[0]))
 else:
     rval = False
 
